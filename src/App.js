@@ -1,6 +1,7 @@
 import React , {Component} from 'react';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation.js';
+import AgeDetection from './components/AgeDetection/AgeDetection.js';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition.js';
 import './App.css';
 import Logo from './components/Logo/Logo.js';
@@ -30,32 +31,38 @@ const parameters = {
            
         }
         
-class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-      input : '',
-      imgURL : ''
-    }
-  }
-  onInputChange = (event) => {
-     this.setState({input : event.target.value});
- }
-
- onClickEvent = () => {
-   this.setState({imgURL : this.state.input})
-   app.models.predict(Clarifai.DEMOGRAPHICS_MODEL , this.state.input).then(
-    function(response) {
-      console.log(response.outputs[0].data.regions[0].data.face.age_appearance.concepts);
-      
-    },
-    function(err) {
-      // there was an error
-    }
-  );
- }
+        class App extends Component {
+          constructor() {
+            super();
+            this.state = {
+              input: '',
+              imgURL: '',
+              AgeDetect: ''
+            };
+          }
+          onInputChange = event => {
+            this.setState({ input: event.target.value });
+          };
+        
+          onClickEvent = () => {
+            this.setState({ imgURL: this.state.input });
+            app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input).then(
+              response => {
+                const A =
+                  response.outputs[0].data.regions[0].data.face.age_appearance
+                    .concepts[0].name;
+        
+                this.setState({ AgeDetect: A });
+              },
+              function(err) {
+                // there was an error
+              }
+            );
+          };
+        
 
   render(){
+    console.log(this.state);
   return (
    <div className="App">
       <Particles className='particles'
@@ -64,6 +71,7 @@ class App extends Component {
      <Logo />
     <ImageLinkForm onInputChange={this.onInputChange} onClickEvent={this.onClickEvent} />
     <FaceRecognition imgURL={this.state.imgURL} />
+    <AgeDetection AgeDetect={this.state.AgeDetect}/>
      </div>
   );
 }

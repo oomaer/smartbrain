@@ -14,6 +14,40 @@
     background-color: #300;
     background-size: 100px 100px;
 }
-.backgroundcolor{
-    background: rgb(140, 232, 242);
-}
+button{
+    background:#1AAB8A;
+    color:#fff;
+    border:none;
+    position:relative;
+    height:60px;
+    font-size:1.6em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  
+button:hover{
+    background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(140, 232, 242), rgb(255, 0, 255)) repeat scroll 0% 0%;
+    color:black;
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background:#39bda7;
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
