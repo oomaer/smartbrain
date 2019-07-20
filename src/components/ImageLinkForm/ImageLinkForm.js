@@ -5,7 +5,7 @@ import './ImageLinkForm.css';
 const ImageLinkForm = ({onInputChange , onClickEvent}) => {
     return(
         <div className='f3'>
-            <p>{'This App Will Try To Detect Age of Image , Give It a Try'} </p>
+            <p>{'This App Will Try To Detect Age , Gender and Region of Image , Give It a Try'} </p>
             <div className='center'>
                 <div className='form center br3 pa4 shadow-5'>
                     <input className='w-70 f4 pa2 center' type='text' onChange={onInputChange}></input>
