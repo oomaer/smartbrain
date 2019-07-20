@@ -1,26 +1,72 @@
-import React from 'react';
-import logo from './logo.svg';
+import React , {Component} from 'react';
+import Particles from 'react-particles-js';
+import Navigation from './components/Navigation/Navigation.js';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition.js';
 import './App.css';
+import Logo from './components/Logo/Logo.js';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm.js';
+import Clarifai from 'clarifai';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+ const app = new Clarifai.App({
+  apiKey: 'cac51409614642bcadcc5350b86fc1c5'
+ });
+
+const parameters = {
+          particles: {
+              number: {
+                  value :150,
+                    density: {
+                      enable : true ,
+                      value_area : 1000
+                      }
+                  },
+              size : {
+                  value : 3.9
+              },
+              move : {
+                  speed : 12.6 
+              }
+            },
+           
+        }
+        
+class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      input : '',
+      imgURL : ''
+    }
+  }
+  onInputChange = (event) => {
+     this.setState({input : event.target.value});
+ }
+
+ onClickEvent = () => {
+   this.setState({imgURL : this.state.input})
+   app.models.predict(Clarifai.DEMOGRAPHICS_MODEL , this.state.input).then(
+    function(response) {
+      console.log(response.outputs[0].data.regions[0].data.face.age_appearance.concepts);
+      
+    },
+    function(err) {
+      // there was an error
+    }
   );
+ }
+
+  render(){
+  return (
+   <div className="App">
+      <Particles className='particles'
+          params={parameters} />
+     <Navigation />
+     <Logo />
+    <ImageLinkForm onInputChange={this.onInputChange} onClickEvent={this.onClickEvent} />
+    <FaceRecognition imgURL={this.state.imgURL} />
+     </div>
+  );
+}
 }
 
 export default App;
