@@ -84,7 +84,7 @@ class App extends Component {
                 });
           };
    componentWillMount() {
-        document.title = 'Age Guess App'
+        document.title = 'Artificial Intelligence'
           };
         
 
