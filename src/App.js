@@ -59,6 +59,10 @@ class App extends Component {
               }
             );
           };
+   componentWillMount() {
+        document.title = 'Age Guess App'
+          };
+        
 
   render(){
     console.log(this.state);
