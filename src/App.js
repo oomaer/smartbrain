@@ -30,22 +30,22 @@ const parameters = {
             },
            
         }
-        
-        class App extends Component {
-          constructor() {
-            super();
-            this.state = {
-              input: '',
-              imgURL: '',
-              AgeDetect: ''
+    
+class App extends Component {
+     constructor() {
+       super();
+        this.state = {
+            input: '',
+            imgURL: '',
+            AgeDetect: ''
             };
           }
-          onInputChange = event => {
-            this.setState({ input: event.target.value });
-          };
+      onInputChange = event => {
+          this.setState({ input: event.target.value });
+        };
         
-          onClickEvent = () => {
-            this.setState({ imgURL: this.state.input });
+      onClickEvent = () => {
+          this.setState({ imgURL: this.state.input });
             app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input).then(
               response => {
                 const A =
@@ -59,7 +59,6 @@ const parameters = {
               }
             );
           };
-        
 
   render(){
     console.log(this.state);
