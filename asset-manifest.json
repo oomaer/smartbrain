@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/smartbrain/static/css/main.5b32c828.chunk.css",
+    "main.js": "/smartbrain/static/js/main.25b0d07e.chunk.js",
+    "main.js.map": "/smartbrain/static/js/main.25b0d07e.chunk.js.map",
+    "runtime~main.js": "/smartbrain/static/js/runtime~main.54e658c3.js",
+    "runtime~main.js.map": "/smartbrain/static/js/runtime~main.54e658c3.js.map",
+    "static/css/2.31dafeb2.chunk.css": "/smartbrain/static/css/2.31dafeb2.chunk.css",
+    "static/js/2.19146b7c.chunk.js": "/smartbrain/static/js/2.19146b7c.chunk.js",
+    "static/js/2.19146b7c.chunk.js.map": "/smartbrain/static/js/2.19146b7c.chunk.js.map",
+    "index.html": "/smartbrain/index.html",
+    "precache-manifest.222f208d204b63ebe63145c03b2e341d.js": "/smartbrain/precache-manifest.222f208d204b63ebe63145c03b2e341d.js",
+    "service-worker.js": "/smartbrain/service-worker.js",
+    "static/css/2.31dafeb2.chunk.css.map": "/smartbrain/static/css/2.31dafeb2.chunk.css.map",
+    "static/css/main.5b32c828.chunk.css.map": "/smartbrain/static/css/main.5b32c828.chunk.css.map",
+    "static/media/ai.png": "/smartbrain/static/media/ai.a6bcaa58.png"
+  }
+}
