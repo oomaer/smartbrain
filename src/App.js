@@ -2,6 +2,8 @@ import React , {Component} from 'react';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation.js';
 import AgeDetection from './components/AgeDetection/AgeDetection.js';
+import GenderDetection from './components/GenderDetection/GenderDetection.js';
+import RegionDetection from './components/RegionDetection/RegionDetection.js';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition.js';
 import './App.css';
 import Logo from './components/Logo/Logo.js';
@@ -37,7 +39,9 @@ class App extends Component {
         this.state = {
             input: '',
             imgURL: '',
-            AgeDetect: ''
+            AgeDetect: '',
+            GenderDetect:'',
+            RegionDetect:''
             };
           }
       onInputChange = event => {
@@ -57,7 +61,27 @@ class App extends Component {
               function(err) {
                 // there was an error
               }
-            );
+             );
+             app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input).then(
+              response => {
+                const B =
+                  response.outputs[0].data.regions[0].data.face.gender_appearance.concepts[0].name;
+          
+               this.setState({ GenderDetect: B });
+              },
+              function(err) {
+                // there was an error
+              });
+              app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input).then(
+                response => {
+                  const C =
+                    response.outputs[0].data.regions[0].data.face.multicultural_appearance.concepts[0].name;
+              
+                 this.setState({ RegionDetect: C });
+                },
+                function(err) {
+                  // there was an error
+                });
           };
    componentWillMount() {
         document.title = 'Age Guess App'
@@ -75,6 +99,9 @@ class App extends Component {
     <ImageLinkForm onInputChange={this.onInputChange} onClickEvent={this.onClickEvent} />
     <FaceRecognition imgURL={this.state.imgURL} />
     <AgeDetection AgeDetect={this.state.AgeDetect}/>
+    <GenderDetection GenderDetect={this.state.GenderDetect}/>
+    <RegionDetection RegionDetect={this.state.RegionDetect}/>
+
      </div>
   );
 }
