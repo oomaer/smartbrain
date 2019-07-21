@@ -1,10 +1,12 @@
 import React , {Component} from 'react';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation.js';
+import SignIn from './components/SignIn/SignIn.js';
+import SignUp from './components/SignUp/SignUp.js';
 import AgeDetection from './components/AgeDetection/AgeDetection.js';
 import GenderDetection from './components/GenderDetection/GenderDetection.js';
 import RegionDetection from './components/RegionDetection/RegionDetection.js';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition.js';
+import SettingUpImage from './components/SettingUpImage/SettingUpImage.js';
 import './App.css';
 import Logo from './components/Logo/Logo.js';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm.js';
@@ -41,7 +43,9 @@ class App extends Component {
             imgURL: '',
             AgeDetect: '',
             GenderDetect:'',
-            RegionDetect:''
+            RegionDetect:'',
+            route : 'SignIn',
+            isSignedIn : false
             };
           }
       onInputChange = event => {
@@ -52,56 +56,56 @@ class App extends Component {
           this.setState({ imgURL: this.state.input });
             app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input).then(
               response => {
-                const A =
-                  response.outputs[0].data.regions[0].data.face.age_appearance
-                    .concepts[0].name;
-        
-                this.setState({ AgeDetect: A });
+                const Data =
+                     response.outputs[0].data.regions[0].data.face
+                const Age = Data.age_appearance.concepts[0].name;
+                const Gender = Data.gender_appearance.concepts[0].name;
+                const Region = Data.multicultural_appearance.concepts[0].name;
+                this.setState({ AgeDetect: Age });
+                this.setState({ GenderDetect: Gender });
+                this.setState({ RegionDetect: Region });
               },
               function(err) {
                 // there was an error
               }
              );
-             app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input).then(
-              response => {
-                const B =
-                  response.outputs[0].data.regions[0].data.face.gender_appearance.concepts[0].name;
-          
-               this.setState({ GenderDetect: B });
-              },
-              function(err) {
-                // there was an error
-              });
-              app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input).then(
-                response => {
-                  const C =
-                    response.outputs[0].data.regions[0].data.face.multicultural_appearance.concepts[0].name;
-              
-                 this.setState({ RegionDetect: C });
-                },
-                function(err) {
-                  // there was an error
-                });
+             
+            
           };
+   onRouteChange = (route) =>{
+     if(route === 'SignIn'){
+       this.setState({ isSignedIn : false });
+     }
+     else if (route === 'home'){
+       this.setState({isSignedIn: true });
+     }
+    this.setState({route: route}) 
+   };
    componentWillMount() {
         document.title = 'Artificial Intelligence'
           };
         
 
   render(){
-    console.log(this.state);
+  const { isSignedIn , route , imgURL , AgeDetect , GenderDetect , RegionDetect } = this.state
   return (
    <div className="App">
       <Particles className='particles'
           params={parameters} />
-     <Navigation />
-     <Logo />
-    <ImageLinkForm onInputChange={this.onInputChange} onClickEvent={this.onClickEvent} />
-    <FaceRecognition imgURL={this.state.imgURL} />
-    <AgeDetection AgeDetect={this.state.AgeDetect}/>
-    <GenderDetection GenderDetect={this.state.GenderDetect}/>
-    <RegionDetection RegionDetect={this.state.RegionDetect}/>
-
+     <Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn}/>
+     {route === 'home'
+     ?<div><Logo />
+     <ImageLinkForm onInputChange={this.onInputChange} onClickEvent={this.onClickEvent} />
+     <SettingUpImage imgURL={imgURL} />
+     <AgeDetection AgeDetect={AgeDetect} />
+     <GenderDetection GenderDetect={GenderDetect}/>
+     <RegionDetection RegionDetect={RegionDetect}/>
+     </div>
+    :( route === "SignIn"
+        ?<SignIn onRouteChange={this.onRouteChange}/>
+        :<SignUp onRouteChange={this.onRouteChange}/>  
+    )
+    }
      </div>
   );
 }
